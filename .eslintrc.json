@@ -1,0 +1,45 @@
+{
+  "extends": [
+    "airbnb",
+    "airbnb/hooks",
+    "airbnb-typescript"
+    // "plugin:react/jsx-runtime"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "function-declaration"
+      }
+    ],
+    "import/no-extraneous-dependencies": ["error", { "packageDir": "." }],
+    "prettier/prettier": ["error", { "singleQuote": true }],
+    "object-curly-newline": "off"
+  },
+  "plugins": ["prettier"]
+}
+
+// {
+//   "extends": ["plugin:react/recommended", "airbnb"],
+//   "parser": "@typescript-eslint/parser",
+//   "parserOptions": {
+//     "ecmaFeatures": {
+//       "jsx": true
+//     },
+//     "ecmaVersion": "latest",
+//     "sourceType": "module"
+//   },
+//   "plugins": ["react", "@typescript-eslint", "plugin:react/jsx-runtime"],
+//   "rules": {
+//     "react/function-component-definition": [
+//       2,
+//       {
+//         "namedComponents": "function-declaration"
+//       }
+//     ]
+//   }
+// }
