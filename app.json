@@ -1,7 +1,6 @@
 {
   "expo": {
     "name": "anime-connect",
-    "entryPoint": "./src/App.tsx",
     "slug": "anime-connect",
     "version": "1.0.0",
     "orientation": "portrait",
