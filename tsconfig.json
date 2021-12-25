@@ -10,7 +10,8 @@
       "navigation/*": ["components/navigation/*"],
       "hooks/*": ["hooks/*"],
       "components/*": ["components/*"],
-      "assets/*": ["../assets/*"]
+      "assets/*": ["../assets/*"],
+      "store/index": ["src/store.ts"]
     }
   }
 }

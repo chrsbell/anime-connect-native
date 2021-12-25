@@ -1,20 +1,17 @@
-import React from 'react';
 import { StatusBar } from 'expo-status-bar';
+import Navigation from 'navigation/index';
+import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import useCachedResources from 'hooks/useCachedResources';
-import Navigation from 'components/navigation/';
-import { StyleSheet } from 'react-native';
+import { Provider } from 'react-redux';
+import { store } from './src/store';
 
 export default function App() {
-  const isLoadingComplete = useCachedResources();
-  if (!isLoadingComplete) {
-    return null;
-  }
-
   return (
     <SafeAreaProvider>
-      <Navigation />
-      <StatusBar />
+      <Provider store={store}>
+        <Navigation />
+        <StatusBar />
+      </Provider>
     </SafeAreaProvider>
   );
 }
