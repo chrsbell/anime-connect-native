@@ -1,5 +1,6 @@
-import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
+import AuthScreen from 'screens/Auth';
 import TitleScreen from 'screens/Title';
 import { RootStackParamList } from './types';
 
@@ -12,6 +13,11 @@ function RootNavigator() {
         <Stack.Screen
           name="Title"
           component={TitleScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Auth"
+          component={AuthScreen}
           options={{ headerShown: false }}
         />
       </Stack.Group>

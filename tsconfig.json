@@ -3,15 +3,18 @@
   "compilerOptions": {
     "jsx": "react",
     "strict": true,
+    "strictNullChecks": true,
     "baseUrl": "./src",
     "paths": {
       "screens/*": ["components/screens/*"],
       "layouts/*": ["components/layouts/*"],
       "navigation/*": ["components/navigation/*"],
-      "hooks/*": ["hooks/*"],
       "components/*": ["components/*"],
       "assets/*": ["../assets/*"],
-      "store/index": ["src/store.ts"]
+      "store/*": ["store/*"],
+      "apis/*": ["apis/*"],
+      "common/*": ["../../common/*"]
     }
   }
+  // "include": ["../common"]
 }
