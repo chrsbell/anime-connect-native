@@ -10,3 +10,8 @@ export default {
   },
   isSmallDevice: width < 375,
 };
+
+export const colors = {
+  dark: '#002A32',
+  light1: '#2FB4B3',
+};

@@ -7,7 +7,7 @@ declare global {
 }
 
 export type RootStackParamList = {
-  Title: undefined;
+  TitleMenu: undefined;
   Auth: undefined; // union with NavigatorScreenParams generic with screen types if nested navigator as component prop
 };
 

@@ -13,7 +13,8 @@
       "assets/*": ["../assets/*"],
       "store/*": ["store/*"],
       "apis/*": ["apis/*"],
-      "common/*": ["../../common/*"]
+      "common/*": ["../../common/*"],
+      "animations/*": ["components/animations/*"]
     }
   }
   // "include": ["../common"]

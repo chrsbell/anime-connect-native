@@ -2,9 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchData } from 'apis/';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
-import { useEffect, useState } from 'react';
+import { useCallback } from 'react';
 import Toast from 'react-native-root-toast';
-import { useAppDispatch } from 'store/hooks';
+import { RootState } from 'store';
+import { useAppDispatch, useAppSelector } from 'store/hooks';
 import { Object } from 'ts-toolbelt';
 import { useGenerateOAuthLinkMutation, useGetAccessTokenMutation } from './api';
 
@@ -49,106 +50,69 @@ export function useAuthenticateWithMAL() {
   const [fetchLink, fetchLinkResult] = useGenerateOAuthLinkMutation();
   const [fetchAccessToken, fetchAccessTokenResult] =
     useGetAccessTokenMutation();
-  const [shouldFetch, setShouldFetch] = useState(false);
   const dispatch = useAppDispatch();
+  const accessToken = useAppSelector(
+    (state: RootState) => state.auth.accessToken
+  );
 
   logErrors(fetchLinkResult);
   logErrors(fetchAccessTokenResult);
-  const getAccessToken = async (
-    url: string,
-    data: OAuthRedirectResponse,
-    appLink: string
-  ) => {
-    const { queryParams }: { queryParams: { code: string; state: string } } =
-      Linking.parse(url);
-    debugger;
-    if (queryParams?.code && queryParams?.state === data?.oaState) {
-      // req from backend
-      await fetchData<OAuthTokenResponse>(
-        fetchAccessToken,
-        {
-          code: queryParams.code,
-          codeVerifier: data?.codeVerifier,
-          redirectURL: appLink,
-        },
-        async (data: OAuthTokenResponse) => {
-          debugger;
-          dispatch(
-            gotNewTokens({
-              accessToken: data.accessToken,
-              refreshToken: data.refreshToken,
-            })
-          );
+
+  const getAccessToken = useCallback(
+    async (url: string, data: OAuthRedirectResponse, appLink: string) => {
+      const { queryParams }: { queryParams: { code: string; state: string } } =
+        Linking.parse(url);
+      if (queryParams?.code && queryParams?.state === data?.oaState) {
+        // req from backend
+        await fetchData<OAuthTokenResponse>(
+          fetchAccessToken,
+          {
+            code: queryParams.code,
+            codeVerifier: data?.codeVerifier,
+            redirectURL: appLink,
+          },
+          async (tokenData: OAuthTokenResponse) => {
+            console.log(tokenData.accessToken);
+            dispatch(
+              gotNewTokens({
+                accessToken: tokenData.accessToken,
+                refreshToken: tokenData.refreshToken,
+              })
+            );
+          }
+        );
+      }
+    },
+    [dispatch, fetchAccessToken]
+  );
+
+  const fetchAndDispatch = async () => {
+    if (!accessToken) {
+      const appLink = await Linking.createURL('/');
+      await fetchData(
+        fetchLink,
+        { appLink },
+        async (redirectData: OAuthRedirectResponse) => {
+          const supported = await Linking.canOpenURL(redirectData?.redirectURL);
+          if (supported) {
+            // weird situation where MAL api needs the redirect_uri when multiple app redirect
+            // urls are defined during /authorize and and /token, but expo needs a separate
+            // redirectURL argument to work with this function
+            const result = await WebBrowser.openAuthSessionAsync(
+              redirectData.redirectURL,
+              appLink
+            );
+            await WebBrowser.maybeCompleteAuthSession();
+            if (result.type === 'success') {
+              getAccessToken(result.url, redirectData, appLink);
+            }
+          }
         }
       );
     }
   };
 
-  useEffect(() => {
-    if (shouldFetch) {
-      const fetchAndDispatch = async () => {
-        const appLink = await Linking.createURL('/');
-        await fetchData(
-          fetchLink,
-          { appLink },
-          async (data: OAuthRedirectResponse) => {
-            const supported = await Linking.canOpenURL(data?.redirectURL);
-            if (supported) {
-              const result = await WebBrowser.openAuthSessionAsync(
-                data.redirectURL,
-                appLink
-              );
-              await WebBrowser.maybeCompleteAuthSession();
-              if (result.type === 'success') {
-                getAccessToken(result.url, data, appLink);
-              }
-            }
-          }
-        );
-      };
-      fetchAndDispatch();
-    }
-  }, [shouldFetch, dispatch]);
-
-  return [shouldFetch, setShouldFetch];
+  return fetchAndDispatch;
 }
-
-// export function useGetTokensAfterRedirect() {
-//   const [fetchAccessToken, result] = useLazyGetAccessTokenQuery();
-//   const originalState = useAppSelector((state) => state.auth.originalState);
-//   const dispatch = useAppDispatch();
-//   // request initial access token after redirect
-//   useEffect(() => {
-//     if (originalState) {
-//       const handler = async ({ url }: EventType) => {
-//         const {
-//           queryParams,
-//         }: { queryParams: { code: string; state: string } } =
-//           Linking.parse(url);
-//         debugger;
-//         if (queryParams?.code && queryParams?.state === originalState) {
-//           // req from backend
-//           await fetchData<OAuthTokenResponse>(
-//             fetchAccessToken,
-//             null,
-//             async (data: OAuthTokenResponse) => {
-//               debugger;
-//               dispatch(
-//                 gotNewTokens({
-//                   accessToken: <string>data.headers.get('Authorization'),
-//                   refreshToken: data.refreshToken,
-//                 })
-//               );
-//             }
-//           );
-//         } else {
-//           networkAlert();
-//         }
-//       };
-//       Linking.addEventListener('url', handler);
-//       return () => Linking.removeEventListener('url', handler);
-//     }
-//   }, [originalState, dispatch, fetchAccessToken]);
-// }
 
 export default slice.reducer;

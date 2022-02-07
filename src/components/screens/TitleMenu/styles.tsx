@@ -1,3 +1,4 @@
+import { colors } from 'constants/layout';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 export default StyleSheet.create({
@@ -5,6 +6,7 @@ export default StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: colors.light1,
   } as ViewStyle,
   title: {
     fontSize: 20,
