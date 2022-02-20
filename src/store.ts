@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { oauthApi } from 'screens/Auth/api';
+import { oauthApi } from 'screens/Menu/api';
 import screenSlices from 'screens/slices';
 
 export const store = configureStore({

@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { AUTH_ENDPOINT } from 'apis/config';
-import { RootState } from 'store';
+import { AUTH_ENDPOINT } from 'root/config';
 
 export const oauthApi = createApi({
   baseQuery: fetchBaseQuery({

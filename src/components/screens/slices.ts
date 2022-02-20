@@ -1,3 +1,3 @@
-import auth from './Auth/slice';
+import auth from './Menu/slice';
 
 export default { auth };

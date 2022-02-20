@@ -1,26 +1,26 @@
-// {
-//   "extends": ["airbnb", "airbnb/hooks", "airbnb-typescript"],
-//   "parser": "@typescript-eslint/parser",
-//   "parserOptions": {
-//     "project": "./tsconfig.json"
-//   },
-//   "rules": {
-//     "react/function-component-definition": [
-//       2,
-//       {
-//         "namedComponents": "function-declaration"
-//       }
-//     ],
-//     "react/jsx-curly-newline": 0,
-//     "import/no-extraneous-dependencies": ["error", { "packageDir": "." }],
-//     "prettier/prettier": ["error", { "singleQuote": true }],
-//     "object-curly-newline": "off",
-//     "no-param-reassign": [
-//       "error",
-//       { "props": true, "ignorePropertyModificationsFor": ["state"] }
-//     ],
-//     "import/prefer-default-export": "off",
-//     "implicit-arrow-linebreak": "off"
-//   },
-//   "plugins": ["@typescript-eslint", "prettier"]
-// }
+{
+  "extends": ["airbnb", "airbnb/hooks", "airbnb-typescript"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "function-declaration"
+      }
+    ],
+    "react/jsx-curly-newline": 0,
+    "import/no-extraneous-dependencies": ["error", { "packageDir": "." }],
+    "prettier/prettier": ["error", { "singleQuote": true }],
+    "object-curly-newline": "off",
+    "no-param-reassign": [
+      "error",
+      { "props": true, "ignorePropertyModificationsFor": ["state"] }
+    ],
+    "import/prefer-default-export": "off",
+    "implicit-arrow-linebreak": "off"
+  },
+  "plugins": ["@typescript-eslint", "prettier"]
+}

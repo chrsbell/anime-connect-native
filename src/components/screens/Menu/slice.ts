@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchData } from 'apis/';
+import { fetchData } from 'apis/index';
 import * as Linking from 'expo-linking';
 import * as WebBrowser from 'expo-web-browser';
 import { useCallback } from 'react';
 import Toast from 'react-native-root-toast';
-import { RootState } from 'store';
-import { useAppDispatch, useAppSelector } from 'store/hooks';
+import { useAppDispatch, useAppSelector } from 'root/hooks/store';
 import { Object } from 'ts-toolbelt';
 import { useGenerateOAuthLinkMutation, useGetAccessTokenMutation } from './api';
 
@@ -72,7 +71,6 @@ export function useAuthenticateWithMAL() {
             redirectURL: appLink,
           },
           async (tokenData: OAuthTokenResponse) => {
-            console.log(tokenData.accessToken);
             dispatch(
               gotNewTokens({
                 accessToken: tokenData.accessToken,

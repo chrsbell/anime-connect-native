@@ -1,4 +1,4 @@
-import { colors } from 'constants/layout';
+import { colors } from 'layouts/config';
 import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 export default StyleSheet.create({

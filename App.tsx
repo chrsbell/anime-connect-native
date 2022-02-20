@@ -4,7 +4,7 @@ import React from 'react';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider } from 'react-redux';
-import { store } from 'store';
+import { store } from 'root/store';
 
 export default function App() {
   return (

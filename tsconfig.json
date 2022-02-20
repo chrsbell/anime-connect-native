@@ -1,7 +1,6 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "jsx": "react",
     "strict": true,
     "strictNullChecks": true,
     "baseUrl": "./src",
@@ -11,10 +10,11 @@
       "navigation/*": ["components/navigation/*"],
       "components/*": ["components/*"],
       "assets/*": ["../assets/*"],
-      "store/*": ["store/*"],
+      // "store": ["./store"],
       "apis/*": ["apis/*"],
       "common/*": ["../../common/*"],
-      "animations/*": ["components/animations/*"]
+      "animations/*": ["components/animations/*"],
+      "root/*": ["./*"]
     }
   }
   // "include": ["../common"]
